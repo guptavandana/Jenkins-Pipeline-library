@@ -1,5 +1,5 @@
-def call(Closure body) {
-    def label = 'myPod'
+def call(String label, Closure body) {
+    //def label = 'myPod'
 
 	podTemplate(label: label, containers: [
 		containerTemplate(name: 'maven', image: 'maven:3.3.9-jdk-8-alpine', ttyEnabled: true, command: 'cat'),

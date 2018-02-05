@@ -4,7 +4,7 @@ def call(body) {
    body.delegate = config
    body()
 
-   usePodTemplates{
+   usePodTemplates('testpod'){
 	   stage('Get a Maven project') {
 
 		container('maven') {
