@@ -4,7 +4,30 @@ def call(body) {
    body.delegate = config
    body()
 
+
+  def namespace
+  stage('User Input'){
+  	timeout(5) {
+  	   namespace = input id: 'namespace', message: 'Enter Namespace', ok: 'Proceed?', parameters: [string(defaultValue: '', description: '', name: 'namespace')]
+  	}
+  }
+
    usePodTemplates('testpod'){
+
+    stage('deploy') {
+      container('kubectl') {
+        useKubeConfig {
+            try{
+              sh "kubectl create namespace ${namespace}"
+            }catch(e){
+              echo "Namespace ${namespace} already exists."
+            }
+          }
+	}
+      }
+
+
+
 	   stage('Get a Maven project') {
 
 		container('maven') {
